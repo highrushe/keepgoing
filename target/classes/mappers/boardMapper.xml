@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.prac.keepgoing.boardMapper">
+
+<!-- 게시판 추가 -->
+<insert id="insertBoard">
+	insert into board(title, writer, detail, date) values(#{title}, #{writer}, #{detail}, SYSDATE());
+</insert>
+
+<!-- 게시판 리스트 보기 -->
+<select id="listBoard" resultType="Board">
+<![CDATA[
+	select * from board order by no desc;
+]]>
+</select>
+
+<!-- 게시판 상세보기 -->
+<select id="detailBoard" resultType="Board">
+	select * from board where no = #{no};
+</select>
+
+<!-- 게시판 삭제 -->
+<delete id="deleteBoard">
+	delete from board where no = #{no};
+</delete>
+
+<!-- 게시판 수정 -->
+<update id="updateBoard">
+	update board set title={#title}, detail={#detail}
+	where no=#{no};
+</update>
+
+</mapper>

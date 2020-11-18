@@ -1,0 +1,50 @@
+< -- MyBatis -- >
+MyBatis는 SQL Mapper 라이브러리다.
+JDBC작업시 반복되는 코드를 줄인다.
+JAVA코드와 SQL문을 분리하여 수월하게 관리한다.
+
+< -- XML -- >
+xml파일은 기본적으로 객체(Bean)을 정의
+1. [servlet-context.xml]
+요청.. 과 관련된 객체를 정의 : controller, @(Annotation), ViewResolver, Interceptor, MultipartResolver..etc
+
+2. [root-context.xml]
+view와 관련되지 않은 객체를 정의 : Service, Repository(DAO), DataBase... etc(Business logic)
+
+3. [web.xml]
+설정을 위한 설정파일 : 즉, WAS가 최초로 구동될 때, 각종 설정을 정의함. 각 xml파일을 인식하도록 설정
+
+4. [pom.xml]
+-프로젝트 관계 설정        ==> 모듈/상속/의존 라이브러리 관리등..
+-빌드 설정               ==> 소스 디렉토리 / 리소스 디렉토리 / 플러그인 등..
+-프로젝트 기본 정보        ==> 프로젝트 이름 / 프로젝트 URL / 라이센스 등..
+-빌드 환경               ==> 빌드할 환경 정보 / 프로파일
+
+
+
+SqlSessionFactoryBean Class : SqlSessionFactory를 생성하기 위함.
+DB와 통신하기 위한 객체
+
+
+< -- classpath -- >
+프로젝트 우클릭 > Properties > Deployment Assembly > 결과적으로 classpath가 가리키는 파일이 WEB-INF다.
+classpath는 즉, src/main/webapp/WEB-INF/classes 이다.
+1) 프로젝트 생성시 src/main/resource라는 classes폴더를 참조한다.
+2) 프로젝트가 실행되자마자 classes폴더 안으로 src/main/resource안의 파일들이 옮겨진다. (classes폴더 안으로 컴파일된 mybatis.config.xml이 생성)
+3) classpath가 jar파일이나 classes파일을 순환하면서 mybatis.config.xml을 찾는다.
+
+스프링 MVC Controller의 특징
+1) Parameter 수집 : 사용자의 요청에 필요한 데이터 추출,
+				   VO(DB의 레코드와 1:1상응되는 클래스)
+				   DTO(컨트롤러, 뷰, 비지니스등의 계층간 데이터 교환을 위한 자바빈즈)로
+				   변환하는 파라미터의 수집 작업.
+2) Annotation    : 클래스/메소드에 어노테이션 추가로 모든 응답/요청 처리 완료.
+3) Test			 : WAS의 실행없이도 편리하게 TEST
+	   
+< -- Model -->
+Model 클래스는 Spring MVC에서 제공하는 데이터를 전달해주는 객체
+Servlet에서 RequestDispatcher과 같다.
+ex) model.addAttribute("result", "성공"); 과 같이 Map처럼 key/value 형태
+	이후 return "board/success"; 와 같이 success.jsp로 데이터를 뿌려준다.
+	then, ----> ${result} 라고 key값을 입력하면 "성공"이라는 value가 출력된다.
+	즉, 화면에 데이터를 뿌려주는 클래스가 Model이다. 
